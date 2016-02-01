@@ -5,12 +5,9 @@ import wx
 class LovelyLogUI(wx.Frame):
     def __init__(self, parent, id):
         wx.Frame.__init__(self, parent, id, 'lovely log', style=wx.MAXIMIZE |wx.DEFAULT_FRAME_STYLE)
-        panel = wx.Panel(self, -1)
-        panel.SetBackgroundColour("White")
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         self.createMenuBar()
-        self.createButtonBar(panel)
-        self.createTextFields(panel)
+        self.createWindow()
 
     def menuData(self):
         return(("&File",
@@ -50,50 +47,21 @@ class LovelyLogUI(wx.Frame):
             self.Bind(wx.EVT_MENU, eachHandler, menuItem)  #给目录点击事件绑定一个处理函数
         return menu
 
-    def buttonData(self):
-        return (("First", self.OnFirst),
-                ("<< PREV", self.OnPrev),
-                ("NEXT >>", self.OnNext),
-                ("Last", self.OnLast))
-
-    def createButtonBar(self, panel, yPos=0):
-        xPos = 0
-        for eachLabel, eachHandler in self.buttonData():
-            pos = (xPos, yPos)
-            button = self.buildOneButton(panel, eachLabel, eachHandler, pos)
-            xPos += button.GetSize().width
-
-    def buildOneButton(self, parent, label, handler, pos=(0, 0)):
-        button = wx.Button(parent, -1, label, pos)   #创建一个按钮，label即为按钮上的文字
-        self.Bind(wx.EVT_BUTTON, handler, button)    #给按钮事件绑定一个处理函数
-        return button
-
-    def textFieldData(self):
-        return(("First Name", (10, 50)),
-               ("Last Name", (10, 80)))
-
-    def createTextFields(self, panel):
-        for eachLabel, eachPos in self.textFieldData():
-            self.createCaptionedText(panel, eachLabel, eachPos)
-
-    def createCaptionedText(self, panel, label, pos):
-        static = wx.StaticText(panel, wx.NewId(), label, pos)  #显示软件上固定的文字
-        static.SetBackgroundColour("White")
-        textPos = (pos[0] + 75, pos[1])
-        wx.TextCtrl(panel, wx.NewId(), "", size=(100, -1), pos=textPos) # 显示文本框
+    def createWindow(self):
+        self.win = wx.SplitterWindow(self)
+        self.logPanel = wx.Panel(self.win, style=wx.SUNKEN_BORDER)
+        self.logPanel.SetBackgroundColour("white")
+        self.filterPanel = wx.Panel(self.win, style=wx.SUNKEN_BORDER)
+        self.filterPanel.SetBackgroundColour("white")
+        self.win.SplitHorizontally(self.logPanel, self.filterPanel)
+        self.win.SetSashGravity(0.7)
 
     def OnReload(self, event): pass
     def OnLoadFilters(self, event): pass
     def OnSaveFilters(self, event): pass
     def OnFont(self, event): pass
-    def OnPrev(self, event): pass
-    def OnNext(self, event): pass
-    def OnLast(self, event): pass
-    def OnFirst(self, event): pass
     def OnOpen(self, event): pass
     def OnCopy(self, event): pass
-    def OnCut(self, event): pass
-    def OnPaste(self, event): pass
     def OnAbout(self, event): pass
     def OnCloseWindow(self, event):
         self.Destroy()
