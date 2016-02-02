@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*-coding: utf-8 -*-
 import wx
-import ll_glob
+import ll_global
 import ll_menubar
+import ll_textwin
+import ll_filterwin
 
 
 class LovelyLogUI(wx.Frame):
@@ -12,15 +14,14 @@ class LovelyLogUI(wx.Frame):
         #---- Menus ----#
         menuBar = ll_menubar.LlMenuBar()
         self.SetMenuBar(menuBar)
+        #---- main window ----#
         self.createWindow()
 
     def createWindow(self):
         self.win = wx.SplitterWindow(self)
-        self.logPanel = wx.Panel(self.win, style=wx.SUNKEN_BORDER)
-        self.logPanel.SetBackgroundColour("white")
-        self.filterPanel = wx.Panel(self.win, style=wx.SUNKEN_BORDER)
-        self.filterPanel.SetBackgroundColour("white")
-        self.win.SplitHorizontally(self.logPanel, self.filterPanel)
+        self.textWin = ll_textwin.LlTextWin(self.win)
+        self.filterWin = ll_filterwin.LlFilterWin(self.win)
+        self.win.SplitHorizontally(self.textWin, self.filterWin)
         self.win.SetSashGravity(0.7)
 
     def OnReload(self, event): pass
@@ -39,4 +40,3 @@ if __name__ == '__main__':
     frame = LovelyLogUI(parent=None, id=-1)
     frame.Show()
     app.MainLoop()
-
