@@ -24,11 +24,12 @@ class LovelyLogUI(wx.Frame):
         self.win.SplitHorizontally(self.textWin, self.filterWin)
         self.win.SetSashGravity(0.7)
 
+    def OnOpen(self, event): pass
     def OnReload(self, event): pass
     def OnLoadFilters(self, event): pass
     def OnSaveFilters(self, event): pass
+
     def OnFont(self, event): pass
-    def OnOpen(self, event): pass
     def OnCopy(self, event): pass
     def OnAbout(self, event): pass
     def OnCloseWindow(self, event):
