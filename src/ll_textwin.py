@@ -30,3 +30,6 @@ class LlTextWin(wx.PyPanel):
         super(LlTextWin, self).__init__(parent, id, pos, size, style)
         self.SetBackgroundColour("white")
         self.stc = LlStc(self)
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        box.Add(self.stc, 1, wx.EXPAND)
+        self.SetSizer(box)
